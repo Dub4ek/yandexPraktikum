@@ -87,24 +87,45 @@ const longestWord = (data) => {
 
 const palindrom = (data) => {
   const string = data.toString();
-  const lettersSet = { };
+  const lettersSet = [];
   let symbolsCount = 0;
-  console.log(string);
+
   for (let item of string) {
     const currentSymbol = item.toLowerCase();
     const charCode = currentSymbol.charCodeAt(0);
+
     if (charCode >= 97 && charCode <= 122) {
       symbolsCount += 1;
-      if (lettersSet.hasOwnProperty(currentSymbol)) {
-        lettersSet[currentSymbol] = lettersSet[currentSymbol] + 1;
-      } else {
-        lettersSet[currentSymbol] = 1;
-      }
+      lettersSet.push(currentSymbol);
     }
+
   };
-  console.log(lettersSet)
-  //return (lettersSet.size === symbolsCount / 2) ? 'True' : 'False';
+
+  let result = true;
+  for (let i = 0; i < lettersSet.length / 2; i++) {
+    result &= lettersSet[i] === lettersSet[lettersSet.length - i - 1];
+  }
+
+  return result ? 'True' : 'False';
 };
 
-console.log(palindrom('A man, a plan, a canal: Panama'));
+//console.log(palindrom('zo'));
+
+const workFromHome = (data) => {
+  let result = '';
+
+  if (data === 0) {
+    return 0;
+  }
+
+  while (data > 0) {
+    result = data % 2 + result;
+    data = Math.floor(data / 2);
+  }
+
+  return result;
+};
+
+console.log(workFromHome(2));
+
 
