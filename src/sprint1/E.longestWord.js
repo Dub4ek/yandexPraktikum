@@ -1,6 +1,6 @@
 const longestWord = (data) => {
   const [length, sentence] = data.toString().split('\n');
-  let max = 0;
+  let max = -1;
   let maxIndex = -1;
   const lengthMap = sentence.trim().split(' ').filter(item => /[a-z]*/.test(item));
 
@@ -17,4 +17,5 @@ const longestWord = (data) => {
   return `${lengthMap[maxIndex]} \n${max}`;
 };
 
-console.log(longestWord('0\n     '));
+console.log(longestWord('17\n' +
+  '          dddddd                  sybtbv1 jxqwbu cj123ddd'));

@@ -5,7 +5,7 @@ const weatherChaotic = (data) => {
   let result = 0;
   const length = elements.length;
 
-  if (parseInt(count, 10) < 1 || length === 0) {
+  if (parseInt(count, 10) <= 1) {
     return 0;
   }
 
@@ -27,5 +27,5 @@ const weatherChaotic = (data) => {
   return result;
 };
 
-console.log(weatherChaotic('1\n' +
- '3\n'));
+console.log(weatherChaotic('4\n' +
+  '0 0 0 0\n'));

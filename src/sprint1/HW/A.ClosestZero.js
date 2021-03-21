@@ -28,4 +28,4 @@ const closestZero = (data) => {
 };
 
 console.log(closestZero('6\n' +
-  '0 7 0 9 4 8 4 0 7 5 6 7 8 20 0 1 1 0 3\n'));
+  '1 1 1 0 0 1 0 0 0 0 0 0\n'));
