@@ -1,5 +1,5 @@
 const weatherChaotic = (data) => {
-  const [count, ...rest] = data.toString().split('\n');
+  const [count, ...rest] = data;
   const [collection, others] = rest;
   const elements = collection.split(' ').map(item => parseInt(item, 10));
   let result = 0;
@@ -27,5 +27,14 @@ const weatherChaotic = (data) => {
   return result;
 };
 
-console.log(weatherChaotic('4\n' +
-  '0 0 0 0\n'));
+var readline = require('readline');
+var io_interface = readline.createInterface({input: process.stdin});
+
+let output_numbers = [];
+io_interface.on('line', function (line) {
+  output_numbers.push(line);
+})
+
+io_interface.on('close', function () {
+  process.stdout.write(weatherChaotic(output_numbers).toString());
+})

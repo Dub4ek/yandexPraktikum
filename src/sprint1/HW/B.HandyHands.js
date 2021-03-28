@@ -1,5 +1,6 @@
+// 50116338
 const handyHands = (data) => {
-  const [countButtons, ...collection] = data.toString().split('\n');
+  const [countButtons, ...collection] = data;
   const valuesMap = new Map();
 
   collection.forEach(item => {
@@ -23,11 +24,17 @@ const handyHands = (data) => {
     }
   }
 
-  return result;
+  return result.toString();
 };
 
-console.log(handyHands('4\n' +
-  '1111\n' +
-  '1111\n' +
-  '1111\n' +
-  '1111\n'))
+var readline = require('readline');
+var io_interface = readline.createInterface({input: process.stdin});
+
+let output_numbers = [];
+io_interface.on('line', function (line) {
+  output_numbers.push(line);
+})
+
+io_interface.on('close', function () {
+  process.stdout.write(handyHands(output_numbers));
+})
