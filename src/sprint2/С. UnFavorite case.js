@@ -1,10 +1,9 @@
 function solution (node) {
   let result = '';
-  let currentNode = node;
 
-  while(currentNode != null) {
-    result += currentNode.value + '\n';
-    currentNode = currentNode.next;
+  while(node != null) {
+    result += node.value + '\n';
+    node = node.next;
   }
 
   return result;
