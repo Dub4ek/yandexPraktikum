@@ -39,14 +39,14 @@ class StackMaxEffective {
 function stackMaxEffective(values) {
   const [operations_count, ...commands] = values;
   const stackMax = new StackMaxEffective();
-  let result = '';
+  let result = [];
 
   commands.forEach((command) => {
     if (command.includes('pop')) {
       const popResult = stackMax.pop();
 
       if (popResult !== undefined) {
-        result += popResult + '\n';
+        result.push(popResult);
       }
     }
 
@@ -55,11 +55,11 @@ function stackMaxEffective(values) {
     }
 
     if (command.includes('get_max')) {
-      result += stackMax.get_max() + '\n';
+      result.push(stackMax.get_max());
     }
   });
 
-  return result;
+  return result.join('\n');
 }
 
 var readline = require('readline');
@@ -73,3 +73,15 @@ io_interface.on('line', function (line) {
 io_interface.on('close', function () {
   process.stdout.write(stackMaxEffective(output_numbers));
 })
+
+console.log(stackMaxEffective(('10\n' +
+  'get_max\n' +
+  'push -6\n' +
+  'pop\n' +
+  'pop\n' +
+  'get_max\n' +
+  'push 2\n' +
+  'get_max\n' +
+  'pop\n' +
+  'push -2\n' +
+  'push -6\n').split('\n')));
