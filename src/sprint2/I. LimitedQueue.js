@@ -6,7 +6,7 @@ class MyQueueSized {
 
     push(value) {
         if (this._isLimitExceed()) {
-            return this.queue.unshift(value);
+            this.queue.push(value);
         } else {
             return 'error';
         }
@@ -33,12 +33,12 @@ class MyQueueSized {
     }
 
     _isLimitExceed() {
-        return this.size() <= this.maxSize;
+        return this.size() < this.maxSize;
     }
 }
 
 function solution(data) {
-    const [commandCount, maxSize, ...commands] = data.split('\n');
+    const [commandCount, maxSize, ...commands] = data;
     const queue = new MyQueueSized(maxSize);
     let result = '';
 
@@ -52,7 +52,11 @@ function solution(data) {
         }
 
         if (command.includes('push')) {
-            result += queue.push(command.split(' ')[1]) + '\n';
+            const pushResult = queue.push(command.split(' ')[1]);
+
+            if (pushResult !== undefined) {
+                result += pushResult + '\n';
+            }
         }
 
         if (command.includes('peek')) {
@@ -67,15 +71,29 @@ function solution(data) {
     return result;
 }
 
+var readline = require('readline');
+var io_interface = readline.createInterface({input: process.stdin});
+
+let output_numbers = [];
+io_interface.on('line', function (line) {
+    output_numbers.push(line);
+})
+
+io_interface.on('close', function () {
+    process.stdout.write(solution(output_numbers));
+})
 
 
-console.log(solution('8\n' +
-  '2\n' +
-  'peek\n' +
-  'push 5\n' +
-  'push 2\n' +
-  'peek\n' +
+/*console.log(solution('10\n' +
+  '1\n' +
+  'push 1\n' +
   'size\n' +
+  'push 3\n' +
   'size\n' +
   'push 1\n' +
-  'size\n'));
+  'pop\n' +
+  'push 1\n' +
+  'pop\n' +
+  'push 3\n' +
+  'push 3\n'));
+*/
