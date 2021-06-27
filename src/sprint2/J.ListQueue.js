@@ -26,8 +26,10 @@ class ListQueue {
   }
 
   put(value) {
-    if (this.queueSize === 0 && !this.queue.value) {
+    if (this.queueSize === 0) {
       this.queue.value = value;
+      this.head = this.queue;
+      this.last = this.queue;
     } else {
       this.last.next = new Node(value);
       this.last = this.last.next;
@@ -81,13 +83,11 @@ io_interface.on('close', function () {
 })
 
 /*console.log(solution('9\n' +
-  'get\n' +
-  'size\n' +
   'put 74\n' +
   'get\n' +
-  'size\n' +
-  'put 90\n' +
-  'size\n' +
-  'size\n' +
-  'size\n'))
+  'get\n' +
+  'put 74\n' +
+  'get\n' +
+  'get\n'))
+
  */
