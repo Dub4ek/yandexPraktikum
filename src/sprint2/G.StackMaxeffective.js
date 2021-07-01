@@ -6,12 +6,13 @@ class StackMaxEffective {
   }
 
   push(value) {
-    if (value > this.maxValue || this.maxValue === undefined) {
-      this.maxValue = value;
-      this.maxValueCol.push(value);
+    const currentValue = parseInt(value, 10);
+    if (currentValue > this.maxValue || this.maxValue === undefined) {
+      this.maxValue = currentValue;
+      this.maxValueCol.push(currentValue);
     }
 
-    this.stack.push(value);
+    this.stack.push(currentValue);
   }
 
   pop() {
@@ -74,14 +75,17 @@ io_interface.on('close', function () {
   process.stdout.write(stackMaxEffective(output_numbers));
 })
 
+
+/*
 console.log(stackMaxEffective(('10\n' +
-  'get_max\n' +
-  'push -6\n' +
+  'pop\n' +
+  'pop\n' +
+  'push 4\n' +
+  'push -5\n' +
+  'push 7\n' +
   'pop\n' +
   'pop\n' +
   'get_max\n' +
-  'push 2\n' +
-  'get_max\n' +
   'pop\n' +
-  'push -2\n' +
-  'push -6\n').split('\n')));
+  'get_max\n').split('\n')));
+*/
