@@ -3,38 +3,38 @@ const closestZero = (data) => {
   const [length, numbers] = data;
   const numCollection = numbers.split(' ');
   const zerosPosition = numCollection
-  .map((item, i) => item == 0 ? i : NaN)
-  .filter(item => !isNaN(item));
-  const getDistance = (index, col) => {
-    let minDistance = Number.MAX_SAFE_INTEGER;
-    let previousValue = Number.MAX_SAFE_INTEGER;
+  .map((item, i) => item == 0 ? i : -1)
+  .filter(item => item >= 0);
 
-    for (let i = 0; i < col.length; i++) {
-      const item = col[i];
-      let distance = Math.abs(index - item);
+  const getDistance = (col, curZeroIndex = 0) => {
+    let zeroIndex = curZeroIndex;
 
-      if (distance < minDistance) {
-        minDistance = distance;
+    return (index) => {
+      let closestZero1 = col[zeroIndex];
+      let closestZero2 = col[zeroIndex + 1];
+
+      const diffZero1 = Math.abs(closestZero1 - index);
+      const diffZero2 = Math.abs(closestZero2 - index);
+
+      if (index < closestZero1) {
+        return diffZero1;
+      } else if (index > closestZero1 || index < closestZero2){
+        return diffZero1 > diffZero2 ? diffZero2 : diffZero1;
       }
-
-      if (previousValue < distance) {
-        break;
-      }
-
-      previousValue = distance;
     }
-
-    return minDistance;
   };
-
+  let getDistanceWithZeros = getDistance(zerosPosition);
+  let zeroIndex = 0;
 
   return numCollection
   .map((item, i) => {
     if (item == 0) {
+      getDistanceWithZeros = getDistance(zerosPosition, zeroIndex);
+      zeroIndex += 1;
       return 0;
-    } else {
-      return getDistance(i, zerosPosition);
     }
+
+    return getDistanceWithZeros(i);
   })
   .join(' ');
 };
