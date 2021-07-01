@@ -1,4 +1,4 @@
-// 50116186
+// 52075539
 const closestZero = (data) => {
   const [length, numbers] = data;
   const numCollection = numbers.split(' ');
