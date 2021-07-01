@@ -1,5 +1,5 @@
 const longestWord = (data) => {
-  const [length, sentence] = data.toString().split('\n');
+  const [length, sentence] = data;
   let max = -1;
   let maxIndex = -1;
   const lengthMap = sentence.trim().split(' ').filter(item => /[a-z]*/.test(item));
@@ -17,5 +17,14 @@ const longestWord = (data) => {
   return `${lengthMap[maxIndex]} \n${max}`;
 };
 
-console.log(longestWord('17\n' +
-  '          dddddd                  sybtbv1 jxqwbu cj123ddd'));
+var readline = require('readline');
+var io_interface = readline.createInterface({input: process.stdin});
+
+let output_numbers = [];
+io_interface.on('line', function (line) {
+  output_numbers.push(line);
+})
+
+io_interface.on('close', function () {
+  process.stdout.write(longestWord(output_numbers));
+})
