@@ -1,13 +1,34 @@
+class Stack {
+  constructor() {
+    this.stack = [];
+  }
+
+  push(value) {
+    this.stack.push(value);
+  }
+
+  pop() {
+    if (this.stack.length === 0) {
+      return 'error';
+    }
+
+    return this.stack.pop();
+  }
+  getTopElement() {
+    return this.stack[this.stack.length - 1];
+  }
+}
+
 class StackMaxEffective {
   constructor() {
     this.stack = [];
-    this.maxValueCol = [];
+    this.maxValueCol = new Stack();
     this.maxValue = undefined;
   }
 
   push(value) {
     const currentValue = parseInt(value, 10);
-    if (currentValue > this.maxValue || this.maxValue === undefined) {
+    if (currentValue >= this.maxValue || this.maxValue === undefined) {
       this.maxValue = currentValue;
       this.maxValueCol.push(currentValue);
     }
@@ -24,7 +45,7 @@ class StackMaxEffective {
 
     if (value === this.maxValue) {
       this.maxValueCol.pop();
-      this.maxValue = this.maxValueCol[this.maxValueCol.length - 1];
+      this.maxValue = this.maxValueCol.getTopElement();
     }
   }
 
@@ -76,16 +97,56 @@ io_interface.on('close', function () {
 })
 
 
-/*
-console.log(stackMaxEffective(('10\n' +
-  'pop\n' +
-  'pop\n' +
-  'push 4\n' +
-  'push -5\n' +
-  'push 7\n' +
+
+/*console.log(stackMaxEffective(('get_max\n' +
+  'push -8\n' +
   'pop\n' +
   'pop\n' +
   'get_max\n' +
   'pop\n' +
-  'get_max\n').split('\n')));
-*/
+  'pop\n' +
+  'get_max\n' +
+  'push -1\n' +
+  'get_max\n' +
+  'push -8\n' +
+  'get_max\n' +
+  'push 3\n' +
+  'get_max\n' +
+  'push 5\n' +
+  'push -1\n' +
+  'pop\n' +
+  'push -4\n' +
+  'pop\n' +
+  'pop\n' +
+  'get_max\n' +
+  'push 2\n' +
+  'pop\n' +
+  'pop\n' +
+  'push -6\n' +
+  'pop\n' +
+  'get_max\n' +
+  'push 4\n' +
+  'pop\n' +
+  'pop\n' +
+  'push -3\n' +
+  'pop\n' +
+  'pop\n' +
+  'get_max\n' +
+  'pop\n' +
+  'pop\n' +
+  'pop\n' +
+  'get_max\n' +
+  'push -2\n' +
+  'get_max\n' +
+  'push -3\n' +
+  'push 5\n' +
+  'get_max\n' +
+  'push -3\n' +
+  'push 1\n' +
+  'push 5\n' +
+  'pop\n' +
+  'pop\n' +
+  'pop\n' +
+  'get_max\n' +
+  'get_max\n').split('\n')));*/
+
