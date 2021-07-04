@@ -11,15 +11,12 @@ function solution(data) {
       return 1;
     }
 
-    return memo[value] = fibonachi(value - 2, memo) + fibonachi(value - 1, memo);
+    return memo[value] = fibonachi(value - 2, memo) % Math.pow(10, parseInt(k, 10)) + fibonachi(value - 1, memo) % Math.pow(10, parseInt(k, 10));
   }
 
   return fibonachi(n, memo) % Math.pow(10, parseInt(k, 10));
 }
 
-function sum(num1, num2) {
-
-}
 /* var readline = require('readline');
 var io_interface = readline.createInterface({input: process.stdin});
 
@@ -40,4 +37,4 @@ process.stdin.on('data', data => {
   process.exit();
 });*/
 
-console.log(solution('10 1'));
+console.log(solution('506277 6'));
