@@ -2,19 +2,19 @@ function solution(data) {
   const [n, k] = data.toString().split(' ');
   const memo = {};
 
-  function fibonachi(value, memo) {
-    if (memo[value]) {
-      return memo[value];
+  function fibonachi(value) {
+    let currentValue = parseInt(value, 10);
+    let arr = [1, 1];
+
+   for (let i = 2; i < currentValue + 1; i++) {
+      arr.push(arr[i  - 2] % Math.pow(10, parseInt(k, 10)) + arr[i - 1] % Math.pow(10, parseInt(k, 10)));
+     arr[i - 2] = undefined;
     }
 
-    if (value <= 1) {
-      return 1;
-    }
-
-    return memo[value] = fibonachi(value - 2, memo) % Math.pow(10, parseInt(k, 10)) + fibonachi(value - 1, memo) % Math.pow(10, parseInt(k, 10));
+    return arr[currentValue] % Math.pow(10, parseInt(k, 10));
   }
 
-  return fibonachi(n, memo) % Math.pow(10, parseInt(k, 10));
+  return fibonachi(n);
 }
 
 /* var readline = require('readline');
@@ -30,11 +30,13 @@ io_interface.on('close', function () {
 })
 */
 
-/*let cnt, res;
+
+let cnt, res;
 process.stdin.on('data', data => {
   res = solution(data);
   process.stdout.write(res + '');
   process.exit();
-});*/
+});
 
-console.log(solution('506277 6'));
+
+//console.log(solution('506277 6'));
