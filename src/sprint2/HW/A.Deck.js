@@ -1,3 +1,4 @@
+// 52113104
 class Dequeue {
   constructor(size) {
     this.queue = [];
@@ -5,7 +6,7 @@ class Dequeue {
   }
 
   push_back(value) {
-    if (!this._canProceedAnOperation()) {
+    if (this._isLimitExceed()) {
       return this._getErrorText();
     }
 
@@ -13,7 +14,7 @@ class Dequeue {
   }
 
   push_front(value) {
-    if (!this._canProceedAnOperation()) {
+    if (this._isLimitExceed()) {
       return this._getErrorText();
     }
 
@@ -21,7 +22,7 @@ class Dequeue {
   }
 
   pop_front() {
-    if (!this._canProceedAnOperation()) {
+    if (this._isEmptyQueue()) {
       return this._getErrorText();
     }
 
@@ -29,15 +30,19 @@ class Dequeue {
   }
 
   pop_back() {
-    if (!this._canProceedAnOperation()) {
+    if (this._isEmptyQueue()) {
       return this._getErrorText();
     }
 
     return this.queue.pop();
   }
 
-  _canProceedAnOperation() {
-    return this.queue.length >= this.size || !this.queue.length;
+  _isLimitExceed() {
+    return this.queue.length >= this.size;
+  }
+
+  _isEmptyQueue() {
+    return this.queue.length === 0;
   }
 
   _getErrorText() {
@@ -91,8 +96,8 @@ io_interface.on('close', function () {
   process.stdout.write(solution(output_numbers));
 })
 
-/*
-console.log(solution(('6\n' +
+
+/*console.log(solution(('6\n' +
   '6\n' +
   'push_front -201\n' +
   'push_back 959\n' +
