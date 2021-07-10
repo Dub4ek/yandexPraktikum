@@ -50,6 +50,63 @@ class Dequeue {
   }
 }
 
+class DequeueRingBuffer {
+  constructor(size) {
+    this.queue = [];
+    this.size = 0;
+    this.tail = 0;
+    this.head = 0;
+    this.max_n = size;
+  }
+
+  pop_front() {
+    if (this._isEmptyQueue()) {
+      return this._getErrorText();
+    }
+
+    const value = this.queue[this.head];
+    this.queue[this.head] = undefined;
+    this.head = (this.head + 1) % this.max_n;
+    this.size -= 1;
+
+    return value;
+  }
+
+  pop_back() {
+
+  }
+
+  push_front() {
+    if (this._isLimitExceed()) {
+      return this._getErrorText();
+    }
+
+
+  }
+
+  push_back(value) {
+    if (this._isLimitExceed()) {
+      return this._getErrorText();
+    }
+
+    this.queue[this.tail] = value;
+    this.tail = (this.tail + 1) % this.max_n;
+    this.size += 1;
+  }
+
+  _isLimitExceed() {
+    return this.queue.length >= this.size;
+  }
+
+  _isEmptyQueue() {
+    return this.queue.length === 0;
+  }
+
+  _getErrorText() {
+    return 'error';
+  }
+}
+
 function solution(values) {
   const [overallCount, operations_count, ...commands] = values;
   const dequeue = new Dequeue(parseInt(operations_count, 10));
