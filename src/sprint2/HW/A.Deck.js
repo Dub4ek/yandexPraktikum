@@ -1,4 +1,4 @@
-// 52113104
+// 52183933
 class Dequeue {
   constructor(size) {
     this.queue = [];
@@ -55,7 +55,7 @@ class DequeueRingBuffer {
     this.queue = new Array(2 * size);
     this.size = 0;
     this.tail = size;
-    this.head = size;
+    this.head = size - 1;
     this.max_n = size;
   }
 
@@ -63,10 +63,11 @@ class DequeueRingBuffer {
     if (this._isEmptyQueue()) {
       return this._getErrorText();
     }
+    let headIndex = this.head + 1;
 
-    const value = this.queue[this.head + 1];
-    this.queue[this.head + 1] = undefined;
-    this.head = (this.head + 1);
+    const value = this.queue[headIndex];
+    this.queue[headIndex] = undefined;
+    this.head = headIndex;
     this.size -= 1;
 
     return value;
@@ -77,9 +78,11 @@ class DequeueRingBuffer {
       return this._getErrorText();
     }
 
-    const value = this.queue[this.tail - 1];
-    this.queue[this.tail - 1] = undefined;
-    this.tail = (this.tail - 1);
+    let tailIndex = this.tail - 1;
+
+    const value = this.queue[tailIndex];
+    this.queue[tailIndex] = undefined;
+    this.tail = tailIndex;
     this.size -= 1;
 
     return value;
@@ -111,7 +114,7 @@ class DequeueRingBuffer {
   }
 
   _isLimitExceed() {
-    return this.queue.length > this.max_n;
+    return this.size >= this.max_n;
   }
 
   _isEmptyQueue() {
@@ -156,7 +159,7 @@ function solution(values) {
 
   return result;
 }
-/*
+
 var readline = require('readline');
 var io_interface = readline.createInterface({input: process.stdin});
 
@@ -168,15 +171,12 @@ io_interface.on('line', function (line) {
 io_interface.on('close', function () {
   process.stdout.write(solution(output_numbers));
 })
-*/
-console.log(solution(('7\n' +
-  '7\n' +
-  'pop_front\n' +
-  'pop_front\n' +
-  'push_front 741\n' +
-  'push_front 648\n' +
-  'pop_front\n' +
-  'pop_back\n' +
-  'pop_front\n').split('\n')));
+
+
+/*console.log(solution(('334\n' +
+  '65\n' +
+  'push_front 505\n' +
+  'pop_back\n').split('\n')));*/
+
 
 // [0,0,20,-201,959,102]
