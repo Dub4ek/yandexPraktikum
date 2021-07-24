@@ -1,29 +1,6 @@
 function solution(data) {
   const [count, values] = data;
   const collection = values.split(' ').map(item => parseInt(item, 10))
-  const maxValue = Math.max(null, ...collection);
-  const maxValueCount = maxValue.toString().length;
-
-  function comparator(a, b) {
-    const currentACount = a.toString().length;
-    const currentBCount = b.toString().length;
-    let currentA = a;
-    let currentB = b;
-
-    if (maxValueCount > currentACount) {
-      currentA = parseInt(a + '9'.repeat(maxValueCount - currentACount), 10);
-    }
-
-    if (maxValueCount > currentBCount) {
-      currentB = parseInt(b + '9'.repeat(maxValueCount - currentBCount), 10);
-    }
-
-    if (currentB === currentA) {
-      return currentACount - currentBCount;
-    }
-
-    return currentB - currentA;
-  }
 
   function comparatorB(a, b) {
     const firstValue = parseInt(a.toString() + b.toString(), 10)
