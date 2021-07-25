@@ -1,22 +1,18 @@
 function solution(data) {
   const [count, values, k] = data;
+  const currentCount = parseInt(count, 10);
   const collection = values.split(' ').map(item => parseInt(item, 10));
+  const squares = [];
 
-  const mapId = collection.reduce((prev, cur) => {
-    if (prev[cur]) {
-      prev[cur] += 1;
-    } else {
-      prev[cur] = 1;
+  for (let i = 0; i < currentCount; i++) {
+    for (let j = 0; j < currentCount; j++) {
+      if (i !== j && collection[i] >= collection[j]) {
+        squares.push(Math.abs(collection[i] - collection[j]));
+      }
     }
+  }
 
-    return prev;
-  }, {});
-
-  return Object.keys(mapId)
-    .sort((a, b) => mapId[b] - mapId[a])
-    .slice(0, k)
-    .join(' ');
-
+  return squares[k - 1];
 }
 
 
@@ -33,7 +29,7 @@ io_interface.on('close', function () {
 })
 
 
-/*console.log(solution(('7\n' +
-  '1 2 3 1 2 3 4\n' +
-  '3\n').split('\n')));
+/*console.log(solution(('3\n' +
+  '1 3 5\n' +
+  '3').split('\n')));
 */

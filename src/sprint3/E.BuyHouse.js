@@ -1,15 +1,20 @@
 function solution(data) {
   const [values, houses]  = data;
   const [houseCount, amount] = values.split(' ').map(item => parseInt(item, 10));
-  const collection = houses.split(' ').map(item => parseInt(item, 10)).sort();
+  const collection = houses.split(' ').sort((a, b) => a - b);
   let count = 0;
-  let currentAmount = collection[0];
-  let index = 1;
+  let currentAmount = 0;
+  let index = 0;
 
   while (count <= houseCount && currentAmount <= amount) {
-    count++;
-    index++;
-    currentAmount = collection[index];
+    currentAmount += parseInt(collection[index], 10);
+
+    if (currentAmount <= amount) {
+      count++;
+      index++;
+    } else {
+      break;
+    }
   }
 
   return count;
@@ -25,10 +30,11 @@ io_interface.on('line', function (line) {
 })
 
 io_interface.on('close', function () {
-  process.stdout.write(solution(output_numbers));
+  console.log(solution(output_numbers));
+  //process.stdout.write(solution(output_numbers));
 })
 
 
-//console.log(solution(('3 1000\n' +
-//  '350 999 200').split('\n')));
+//console.log(solution(('8 3\n' +
+//  '9 2 8 4 6 5 3 10').split('\n')));
 
