@@ -39,6 +39,3 @@ io_interface.on('line', function (line) {
 io_interface.on('close', function () {
   process.stdout.write(solution(output_numbers));
 })
-
-/*console.log(solution(('2\n' +
-  '4 5').split('\n')));*/
