@@ -1,3 +1,5 @@
+// 52235369
+
 /**
  *  Алла ошиблась при копировании из одной структуры данных в другую. Она хранила массив чисел в кольцевом буфере. Массив был отсортирован по возрастанию, и в нём можно было найти элемент за логарифмическое время. Алла скопировала данные из кольцевого буфера в обычный массив, но сдвинула данные исходной отсортированной последовательности. Теперь массив не является отсортированным. Тем не менее, нужно обеспечить возможность находить в нем элемент за
  O(logn).
@@ -20,23 +22,6 @@
  */
 
 function brokenSearch(arr, k) {
-  function findMin(arr, low, high) {
-
-    while(low < high) {
-      let mid = Math.floor(low + (high - low) / 2);
-
-      if (arr[mid] == arr[high]) {
-        high--;
-      } else if (arr[mid] > arr[high]) {
-        low = mid + 1;
-      } else {
-        high = mid;
-      }
-    }
-
-    return high;
-  }
-
   function getIndex(shift, length) {
     return function (index) {
       if (index + shift > length - 1) {
@@ -47,41 +32,52 @@ function brokenSearch(arr, k) {
     }
   }
 
-  function findElement(arr, index, element) {
-    let start = 0;
-    let end = arr.length;
-    let result = -1;
-    let getCurrentIndex = getIndex(index, arr.length);
+  let low = 0;
+  let high = arr.length - 1;
 
-    while (start < end) {
-      let mid = Math.floor(start + (end - start) / 2);
-      let midElement = arr[getCurrentIndex(mid)];
+  while(low < high) {
+    let mid = Math.floor(low + (high - low) / 2);
 
-      if (midElement === element) {
-        result = mid;
-        break;
-      } else if (element < midElement) {
-        end = mid;
-      } else {
-        start = mid + 1;
-      }
+    if (arr[mid] == arr[high]) {
+      high--;
+    } else if (arr[mid] > arr[high]) {
+      low = mid + 1;
+    } else {
+      high = mid;
     }
-
-    if (result === -1) {
-      return result;
-    }
-
-    return getCurrentIndex(result);
   }
 
-  const minElemIndex = findMin(arr, 0, arr.length);
+  const minElemIndex = high;
 
-  return findElement(arr, minElemIndex, k);
+  let start = 0;
+  let end = arr.length;
+  let result = -1;
+  let getCurrentIndex = getIndex(minElemIndex, arr.length);
+
+  while (start < end) {
+    let mid = Math.floor(start + (end - start) / 2);
+    let midElement = arr[getCurrentIndex(mid)];
+
+    if (midElement === k) {
+      result = mid;
+      break;
+    } else if (k < midElement) {
+      end = mid;
+    } else {
+      start = mid + 1;
+    }
+  }
+
+  if (result === -1) {
+    return result;
+  }
+
+  return getCurrentIndex(result);
 }
 
 function test() {
-  const arr = '12 41 122 411 412 1222 3000 12222 122222'.split(' ').map(item => parseInt(item, 10));
-  console.log(brokenSearch(arr, 3000))
+  const arr = '19 21 100 101 1 4 5 7 12'.split(' ').map(item => parseInt(item, 10));
+  console.log(brokenSearch(arr, 5))
   /*if (brokenSearch(arr, 5) !== 6)  {
     console.error("WA");
   } */
