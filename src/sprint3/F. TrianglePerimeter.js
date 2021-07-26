@@ -31,7 +31,8 @@ io_interface.on('line', function (line) {
 })
 
 io_interface.on('close', function () {
-  process.stdout.write(solution(output_numbers));
+  console.log(solution(output_numbers));
+  //process.stdout.write(solution(output_numbers));
 })
 
 
