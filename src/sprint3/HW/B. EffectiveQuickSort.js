@@ -1,3 +1,4 @@
+// 52243568
 /**
  * имофей решил организовать соревнование по спортивному программированию, чтобы найти талантливых стажёров. Задачи подобраны, участники зарегистрированы, тесты написаны. Осталось придумать, как в конце соревнования будет определяться победитель.
 
@@ -31,60 +32,66 @@
 
 function solution(data) {
   const [count, ...participants] = data;
-  const collection = participants.map(item => item.split(' '));
+  const collection = participants.map(item => item.split(' ')).filter(item => !isNaN(+item[1]));
 
-  function compare(a, b) {
+  function compare(a, b, symbol) {
     const [nameA, scoreA, failA] = a;
     const [nameB, scoreB, failB] = b;
+    let result = undefined;
 
-    return parseInt(scoreA, 10) > parseInt(scoreB, 10);
-    /*
     if (parseInt(scoreA, 10) !== parseInt(scoreB, 10)) {
-      return parseInt(scoreA, 10) > parseInt(scoreB, 10);
+      result = symbol === '>'
+        ? (parseInt(scoreA, 10) > parseInt(scoreB, 10))
+        : (parseInt(scoreA, 10) < parseInt(scoreB, 10));
     } else if (parseInt(failA, 10) !== parseInt(failB, 10)) {
-      return parseInt(failA, 10) < parseInt(failB, 10);
-    }
 
-    return nameA > nameB;
-     */
+      result =  symbol === '>'
+        ? -parseInt(failA, 10) > -parseInt(failB, 10)
+        : -parseInt(failA, 10) < -parseInt(failB, 10);
+    } else {
+      result = symbol === '>'
+        ? nameA < nameB
+        : nameA > nameB;
+    }
+    return result;
   }
 
   function quickSort(arr, left, right) {
     const originLeft = left;
     const originRight = right;
 
-    if (right - left < 1) {
-      return;
-    }
+    let pivot = Math.floor((right + left) / 2);
+    let pivotElement = arr[pivot];
 
-    let pivot = Math.floor(Math.random() * arr.length);
-
-    while (left < right) {
-      while(left < right && !compare(arr[left], arr[pivot])) {
+    while (left <= right) {
+      while(compare(arr[left], pivotElement, '>')) {
         left++;
       }
 
-      while(left < right && compare(arr[right], arr[pivot])) {
+      while(compare(arr[right], pivotElement, '<')) {
         right--;
       }
 
-      if (left < right) {
+      if (left <= right) {
         let temp = arr[right];
-
         arr[right] = arr[left];
         arr[left] = temp;
         left++;
         right--;
       }
     }
-    quickSort(arr, originLeft, pivot);
-    quickSort(arr, pivot + 1, originRight);
+
+    if (originLeft < left - 1) {
+      quickSort(arr, originLeft, left - 1);
+    }
+    if (left < originRight) {
+      quickSort(arr, left, originRight);
+    }
   }
 
   quickSort(collection, 0, collection.length - 1);
 
-  //return collection.map(item => item[0]).join('\n');
-  return collection
+  return collection.map(item => item[0]).join('\n');
 }
 
 
@@ -97,13 +104,24 @@ io_interface.on('line', function (line) {
 })
 
 io_interface.on('close', function () {
-  process.stdout.write(solution(output_numbers));
+  console.log(solution(output_numbers))
+  //process.stdout.write(solution(output_numbers));
 })
 
 
-console.log(solution(('5\n' +
-  'alla 4 100\n' +
-  'gena 6 1000\n' +
-  'gosha 2 90\n' +
-  'rita 2 90\n' +
-  'timofey 4 80').split('\n')));
+
+/*console.log(solution(('13\n' +
+  'tufhdbi 76 58\n' +
+  'rqyoazgbmv 59 78\n' +
+  'qvgtrlkmyrm 35 27\n' +
+  'tgcytmfpj 70 27\n' +
+  'xvf 84 19\n' +
+  'jzpnpgpcqbsmczrgvsu 30 3\n' +
+  'evjphqnevjqakze 92 15\n' +
+  'wwzwv 87 8\n' +
+  'tfpiqpwmkkduhcupp 1 82\n' +
+  'tzamkyqadmybky 5 81\n' +
+  'amotrxgba 0 6\n' +
+  'easfsifbzkfezn 100 28\n' +
+  'kivdiy 70 47\n' +
+  'Просто тест').split('\n')));*/
