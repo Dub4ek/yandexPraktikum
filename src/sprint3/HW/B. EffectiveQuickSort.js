@@ -27,3 +27,83 @@
  Формат вывода
  Для отсортированного списка участников выведите по порядку их логины по одному в строке.
  */
+
+
+function solution(data) {
+  const [count, ...participants] = data;
+  const collection = participants.map(item => item.split(' '));
+
+  function compare(a, b) {
+    const [nameA, scoreA, failA] = a;
+    const [nameB, scoreB, failB] = b;
+
+    return parseInt(scoreA, 10) > parseInt(scoreB, 10);
+    /*
+    if (parseInt(scoreA, 10) !== parseInt(scoreB, 10)) {
+      return parseInt(scoreA, 10) > parseInt(scoreB, 10);
+    } else if (parseInt(failA, 10) !== parseInt(failB, 10)) {
+      return parseInt(failA, 10) < parseInt(failB, 10);
+    }
+
+    return nameA > nameB;
+     */
+  }
+
+  function quickSort(arr, left, right) {
+    const originLeft = left;
+    const originRight = right;
+
+    if (right - left < 1) {
+      return;
+    }
+
+    let pivot = Math.floor(Math.random() * arr.length);
+
+    while (left < right) {
+      while(left < right && !compare(arr[left], arr[pivot])) {
+        left++;
+      }
+
+      while(left < right && compare(arr[right], arr[pivot])) {
+        right--;
+      }
+
+      if (left < right) {
+        let temp = arr[right];
+
+        arr[right] = arr[left];
+        arr[left] = temp;
+        left++;
+        right--;
+      }
+    }
+    quickSort(arr, originLeft, pivot);
+    quickSort(arr, pivot + 1, originRight);
+  }
+
+  quickSort(collection, 0, collection.length - 1);
+
+  //return collection.map(item => item[0]).join('\n');
+  return collection
+}
+
+
+var readline = require('readline');
+var io_interface = readline.createInterface({input: process.stdin});
+
+let output_numbers = [];
+io_interface.on('line', function (line) {
+  output_numbers.push(line);
+})
+
+io_interface.on('close', function () {
+  process.stdout.write(solution(output_numbers));
+})
+
+
+console.log(solution(('5\n' +
+  'alla 4 100\n' +
+  'gena 6 1000\n' +
+  'gosha 2 90\n' +
+  'rita 2 90\n' +
+  'timofey 4 80').split('\n')));
