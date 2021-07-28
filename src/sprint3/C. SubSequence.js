@@ -7,36 +7,15 @@ function solution(data) {
     return 'True';
   }
 
-  firstStr.split('').forEach((item, i) => {
-    mapIndex[item] = secondStrCollection.map((letter, i) => {
-      if (letter === item) {
-        return i;
-      }
+  let firstStrIndex = 0;
 
-      return undefined;
-    }).filter((item) => item !== undefined);
+  secondStrCollection.forEach(item => {
+    if (firstStr[firstStrIndex] === item) {
+      firstStrIndex++;
+    }
   });
 
-  let previousValue = mapIndex[firstStr[0]][0];
-  let found = 1;
-
-  for (let i = 1; i < firstStr.length; i++) {
-    let collection = mapIndex[firstStr[i]];
-
-    if (found < i) {
-      break;
-    }
-
-    for (let j = 0; j < collection.length; j++) {
-      if (collection[j] > previousValue) {
-        previousValue = collection[j];
-        found += 1;
-        break;
-      }
-    }
-  }
-
-  return found === firstStr.length ? 'True' : 'False';
+  return firstStrIndex === firstStr.length ? 'True' : 'False';
 }
 
 
@@ -53,6 +32,6 @@ io_interface.on('close', function () {
 })
 
 
-//console.log(solution(('abc\n' +
-//  'ahbgdcu\n').split('\n')));
+/*console.log(solution(('aawhdh\n' +
+  'famiymrimfryosrhywclr\n').split('\n')));*/
 
