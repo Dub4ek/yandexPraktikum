@@ -29,6 +29,10 @@
  Для отсортированного списка участников выведите по порядку их логины по одному в строке.
  */
 
+/*
+
+Комментарий по поводу parseInt. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt#description - вот тут расписано почему все же рекомендуется указывать radix. Я так всегда пишу по привычке из-зи air-bnb code style, там это было обязательное требование
+ */
 
 function solution(data) {
   const [count, ...participants] = data;
