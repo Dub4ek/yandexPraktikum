@@ -1,4 +1,4 @@
-//52336203
+//52337701
 /**
  * ПРИНЦИП РАБОТЫ
  * Основной принцип работы  - создание так называемого "поискового индекса". Проходимся по всем документам и создаем хеш таблицу слов и индексы документов, где они встречаются. Так же создаем для каждого документа хеш таблицу со словами и их появлению в документе. После проходимся по всем запросам и находим релевантность, далее сортируем по этому признаку и берем самые большие значений
@@ -41,13 +41,13 @@ function solution(data) {
 
     collection.forEach((item) => {
       const currentItem = item.split(' ');
-      const dict = {};
+      const dict = new Map();
 
       currentItem.forEach(word => {
-        if (dict.hasOwnProperty(word)) {
-          dict[word] += 1;
+        if (dict.has(word)) {
+          dict.set(word, dict.get(word) + 1);
         } else {
-          dict[word] = 1;
+          dict.set(word, 1);
         }
       })
 
@@ -68,20 +68,21 @@ function solution(data) {
     return valueB - valueA;
   }
 
-
   const searchList = parseString(documentsCollection);
-  const searchMap = {};
+  const searchMap = new Map();
 
   searchList.forEach((item, i) => {
-    Object.keys(item).forEach(searchWord => {
-      if (!searchMap.hasOwnProperty(searchWord)) {
-        searchMap[searchWord] = [i];
+    for (const [key] of item) {
+      if (!searchMap.has(key)) {
+        searchMap.set(key, [i])
       } else {
-        searchMap[searchWord].push(i);
-      }
-    })
-  });
+        const newCollection = searchMap.get(key);
 
+        newCollection.push(i);
+        searchMap.set(key, newCollection);
+      }
+    }
+  });
 
   const requestList = requests.map(item => item.split(' ').reduce((prev, cur) => {
     prev[cur] = null;
@@ -95,20 +96,20 @@ function solution(data) {
     for (let i = 0; i < requestCollection.length; i++) {
       let requestWord = requestCollection[i];
 
-      if (searchMap[requestWord]) {
-        const indexes = searchMap[requestWord];
+      if (searchMap.has(requestWord)) {
+        const indexes = searchMap.get(requestWord);
 
         indexes.forEach(index => {
           if (answer[requestIndex]) {
             if (answer[requestIndex].hasOwnProperty(index)) {
-              answer[requestIndex][index] += searchList[index][requestWord];
+              answer[requestIndex][index] += searchList[index].get(requestWord);
             } else {
-              answer[requestIndex][index] = searchList[index][requestWord];
+              answer[requestIndex][index] = searchList[index].get(requestWord);
             }
 
           } else {
             const arr = {};
-            arr[index] = searchList[index][requestWord];
+            arr[index] = searchList[index].get(requestWord);
             answer[requestIndex] = arr;
           }
         });
@@ -117,15 +118,15 @@ function solution(data) {
   });
 
   return answer
-    .map((item) => {
-      return Object.keys(item)
-                .map(key => [item[key], parseInt(key)])
-                .sort(comparator)
-                .slice(0, 5);
-    })
-    .map(item => item.map(element => element[1] + 1)
-    .join(' '))
-    .join('\n')
+  .map((item) => {
+    return Object.keys(item)
+    .map(key => [item[key], parseInt(key)])
+    .sort(comparator)
+    .slice(0, 5);
+  })
+  .map(item => item.map(element => element[1] + 1)
+  .join(' '))
+  .join('\n')
 }
 
 var readline = require('readline');
