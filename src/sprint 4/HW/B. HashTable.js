@@ -21,6 +21,7 @@ class HashTable {
   constructor() {
     this.arr = new Array(Math.pow(10, 6));
     this.m = Math.pow(2, 32);
+    this.hashConst = 2654435769;
   }
 
   put(key, value) {
@@ -53,8 +54,7 @@ class HashTable {
   }
 
   _calcKey(key) {
-    const s = 2654435769;
-    const bucket =  (key % this.m) * s % Math.pow(2, 32);
+    const bucket = (key % this.m) * this.hashConst % Math.pow(2, 32);
 
     return bucket;
   }
