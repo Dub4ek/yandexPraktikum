@@ -15,7 +15,6 @@ function DFS(root) {
   if (!root) {
     return 0;
   }
-
   let leftTreeHeight = DFS(root.left);
 
   if (leftTreeHeight === -1) {

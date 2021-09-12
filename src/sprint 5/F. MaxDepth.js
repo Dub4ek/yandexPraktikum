@@ -1,5 +1,6 @@
-/**
- Comment it before submitting
+/*
+
+ //Comment it before submitting
  class CNode {
     constructor(value, left = null, right = null) {
         this.value = value;
@@ -7,12 +8,16 @@
         this.right = right;
     }
 }
- */
+*/
+
 
 
 function solution(root) {
-  // Your code
-  // “ヽ(´▽｀)ノ”
+  if (!root) {
+    return 0;
+  }
+
+  return Math.max(solution(root.left), solution(root.right)) + 1;
 }
 
 function test() {
@@ -23,3 +28,5 @@ function test() {
   var node5 = new CNode(5, node3, node4);
   console.assert(solution(node5) === 3);
 }
+
+//test();

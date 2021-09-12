@@ -10,8 +10,11 @@
  */
 
 function solution(root1, root2) {
-  // Your code
-  // “ヽ(´▽｀)ノ”
+  if (root1 && root2 && root1.value === root2.value) {
+    return solution(root1.left, root2.left) && solution(root1.right, root2.right);
+  }
+
+  return !root1 && !root2;
 }
 
 function test() {
